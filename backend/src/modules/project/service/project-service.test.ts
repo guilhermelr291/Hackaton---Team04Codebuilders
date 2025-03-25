@@ -44,5 +44,14 @@ describe('ProjectService', () => {
         UnprocessableEntity
       );
     });
+
+    test('Should call projectRepository.create with correct params', async () => {
+      const createSpy = vi.spyOn(mockProjectRepository, 'create');
+      const createProjectParams = mockCreateProjectParams();
+
+      await sut.create(createProjectParams);
+
+      expect(createSpy).toHaveBeenCalledWith(createProjectParams);
+    });
   });
 });
