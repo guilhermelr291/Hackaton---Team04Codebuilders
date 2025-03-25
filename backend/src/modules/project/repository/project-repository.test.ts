@@ -34,7 +34,7 @@ const mockProjectModel = () => ({
   status: 'IN_PROGRESS',
   price: 10,
 });
-const mockProjectParams = (): CreateProjectParams => ({
+const mockCreateProjectParams = (): CreateProjectParams => ({
   name: 'any_name',
   clientId: 1,
   userId: 1,
@@ -53,7 +53,7 @@ describe('ProjectRepository', () => {
 
   describe('create', () => {
     test('Should call prisma with correct params', async () => {
-      const createProjectParams = mockProjectParams();
+      const createProjectParams = mockCreateProjectParams();
 
       await sut.create(createProjectParams);
 
@@ -62,7 +62,7 @@ describe('ProjectRepository', () => {
       });
     });
     test('Should return created project', async () => {
-      const result = await sut.create(mockProjectParams());
+      const result = await sut.create(mockCreateProjectParams());
 
       expect(result).toStrictEqual(mockProjectModel());
     });
@@ -72,7 +72,7 @@ describe('ProjectRepository', () => {
         throw new Error();
       });
 
-      expect(sut.create(mockProjectParams())).rejects.toThrow();
+      expect(sut.create(mockCreateProjectParams())).rejects.toThrow();
     });
   });
 });
