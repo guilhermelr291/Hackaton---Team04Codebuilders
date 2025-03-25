@@ -53,5 +53,13 @@ describe('ProjectService', () => {
 
       expect(createSpy).toHaveBeenCalledWith(createProjectParams);
     });
+
+    test('Should throw if clientRepository.getById throws', async () => {
+      vi.spyOn(mockClientRepository, 'getById').mockImplementationOnce(() => {
+        throw new Error();
+      });
+
+      await expect(sut.create(mockCreateProjectParams())).rejects.toThrow();
+    });
   });
 });
