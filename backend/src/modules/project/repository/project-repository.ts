@@ -3,6 +3,7 @@ import { CreateProjectParams } from '../service/project-service';
 
 export class ProjectRepository {
   async create(data: CreateProjectParams) {
-    await prisma.project.create({ data });
+    const project = await prisma.project.create({ data });
+    return project;
   }
 }
