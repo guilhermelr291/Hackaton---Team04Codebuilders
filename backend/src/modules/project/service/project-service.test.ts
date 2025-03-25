@@ -61,5 +61,13 @@ describe('ProjectService', () => {
 
       await expect(sut.create(mockCreateProjectParams())).rejects.toThrow();
     });
+
+    test('Should throw if projectRepository.create throws', async () => {
+      vi.spyOn(mockProjectRepository, 'create').mockImplementationOnce(() => {
+        throw new Error();
+      });
+
+      await expect(sut.create(mockCreateProjectParams())).rejects.toThrow();
+    });
   });
 });
