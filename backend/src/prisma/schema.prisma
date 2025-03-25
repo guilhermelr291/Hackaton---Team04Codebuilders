@@ -20,10 +20,10 @@ model User {
   city          String?
   neighborhood  String?
   postalCode    String?
-  isEmailVerify  Boolean?
+  isEmailVerify  Boolean @default(false)
   project     Project[]
-  updated_At        DateTime?
-  created_At        DateTime            @default(now())
+  updatedAt        DateTime            @updatedAt
+  createdAt        DateTime            @default(now())
 }
 
 enum Status{
@@ -37,22 +37,23 @@ enum Status{
 
 model Project {
   id              Int             @id @default(autoincrement())
+  name String
   userId Int
-  user User @relation(fields: [userId], references: [id])
   clientId        Int
-  client          Client          @relation(fields: [clientId], references: [id])
   status          Status     @default(PLANNING)
   price           Float?          
   timeEntries     TimeEntry[]     
-  updated_At        DateTime?
-  created_At        DateTime            @default(now())
+  updatedAt        DateTime             @updatedAt
+  createdAt        DateTime            @default(now())
   
+  user User @relation(fields: [userId], references: [id])
+  client          Client          @relation(fields: [clientId], references: [id])
 }
 
 
 model Client {
   id       Int      @id @default(autoincrement())
-  client String @db.VarChar(100)
+  name String 
   email String 
   phone         String?
   address       String?
@@ -65,10 +66,11 @@ model Client {
 model TimeEntry {
   id          Int      @id @default(autoincrement())
   projectId   Int
-  project     Project  @relation(fields: [projectId], references: [id])
   duration    Int    
   description String
   date  DateTime?
-  created_At   DateTime @default(now())
+  createdAt   DateTime @default(now())
+  
+  project     Project  @relation(fields: [projectId], references: [id])
 }
 
