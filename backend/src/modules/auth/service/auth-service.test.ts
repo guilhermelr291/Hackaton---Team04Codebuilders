@@ -1,15 +1,24 @@
-import { beforeEach, describe, expect, test, vi } from 'vitest';
+import {
+  afterAll,
+  beforeAll,
+  beforeEach,
+  describe,
+  expect,
+  test,
+  vi,
+} from 'vitest';
 import { UserRepository } from '../../user/repository/user-repository';
 import { AuthService, LoginParams, SignUpParams } from './auth-service';
-import { User } from '@prisma/client';
 import { UnauthorizedError } from '../../../common/errors/http-errors';
 import { HashComparer } from '../protocols/hash-comparer';
 import { Hasher } from '../protocols/hasher';
 import { Encrypter } from '../protocols/encrypter';
+import Mockdate from 'mockdate';
 
 const mockSignUpParams = (): SignUpParams => ({
   email: 'any_email@mail.com',
   password: 'any_password',
+  serviceType: 'any_service_type',
   confirmPassword: 'any_password',
   name: 'any_name',
 });
@@ -18,11 +27,21 @@ const mockLoginParams = (): LoginParams => ({
   password: 'any_password',
 });
 
-const mockUserModel = (): User => ({
+const mockUserModel = () => ({
   id: 1,
-  email: 'any_email',
-  password: 'any_password',
   name: 'any_name',
+  email: 'any_email@mail.com',
+  password: 'any_password',
+  serviceType: 'any_service_type',
+  phone: null,
+  address: null,
+  city: null,
+  neighborhood: null,
+  postalCode: null,
+  isEmailVerified: true,
+  updatedAt: new Date(),
+  createdAt: new Date(),
+  project: [],
 });
 
 const mockUserRepository = {
@@ -53,6 +72,14 @@ describe('AuthService', () => {
   const hasherStub = new HasherStub();
   const hashComparerStub = new HashComparerStub();
   const encrypterStub = new EncrypterStub();
+
+  beforeAll(() => {
+    Mockdate.set(new Date());
+  });
+
+  afterAll(() => {
+    Mockdate.reset();
+  });
 
   beforeEach(() => {
     vi.clearAllMocks();
@@ -177,13 +204,13 @@ describe('AuthService', () => {
     test('Should return token and user on success', async () => {
       const result = await sut.login(mockLoginParams());
 
+      const userModel = mockUserModel();
+
+      const { password, ...modelToCompare } = userModel;
+
       expect(result).toStrictEqual({
         token: 'encrypted value',
-        user: {
-          id: 1,
-          email: 'any_email',
-          name: 'any_name',
-        },
+        user: modelToCompare,
       });
     });
 

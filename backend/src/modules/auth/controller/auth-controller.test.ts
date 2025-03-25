@@ -33,6 +33,7 @@ describe('AuthController', () => {
       body: {
         name: 'any_name',
         email: 'any_email@mail.com',
+        serviceType: 'any_service_type',
         password: 'any_password',
         confirmPassword: 'any_password',
       },

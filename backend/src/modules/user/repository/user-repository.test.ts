@@ -1,8 +1,16 @@
-import { beforeEach, describe, expect, test, vi } from 'vitest';
+import {
+  afterAll,
+  beforeAll,
+  beforeEach,
+  describe,
+  expect,
+  test,
+  vi,
+} from 'vitest';
 import { UserRepository } from './user-repository';
 import prisma from '../../../prisma/db';
 import { SignUpParams } from '../../auth/service/auth-service';
-import { User } from '@prisma/client';
+import Mockdate from 'mockdate';
 
 vi.mock('../../../prisma/db', () => ({
   default: {
@@ -10,22 +18,40 @@ vi.mock('../../../prisma/db', () => ({
   },
 }));
 
-const mockUser = (): User => ({
+const mockUser = () => ({
   id: 1,
-  email: 'any_email',
   name: 'any_name',
+  email: 'any_email@mail.com',
   password: 'any_password',
+  serviceType: 'any_service_type',
+  phone: null,
+  address: null,
+  city: null,
+  neighborhood: null,
+  postalCode: null,
+  isEmailVerified: true,
+  updatedAt: new Date(),
+  createdAt: new Date(),
+  project: [],
 });
 
-const mockSighUpParams = (): SignUpParams => ({
-  email: 'any_email',
-  name: 'any_name',
+const mockSignUpParams = (): SignUpParams => ({
+  email: 'any_email@mail.com',
   password: 'any_password',
+  serviceType: 'any_service_type',
   confirmPassword: 'any_password',
+  name: 'any_name',
 });
 
 describe('UserRepository', () => {
   let sut: UserRepository;
+
+  beforeAll(() => {
+    Mockdate.set(new Date());
+  });
+  afterAll(() => {
+    Mockdate.reset();
+  });
 
   beforeEach(() => {
     vi.clearAllMocks();
@@ -34,24 +60,24 @@ describe('UserRepository', () => {
 
   describe('getByEmail', () => {
     test('Should call prisma findUnique with correct value', async () => {
-      await sut.getByEmail('any_email');
+      await sut.getByEmail('any_email@mail.com');
 
       expect(prisma.user.findUnique).toHaveBeenCalledWith({
-        where: { email: 'any_email' },
+        where: { email: 'any_email@mail.com' },
       });
     });
 
     test('Should return user if it is found', async () => {
       vi.mocked(prisma.user.findUnique).mockResolvedValueOnce(mockUser());
 
-      const result = await sut.getByEmail('any_email');
+      const result = await sut.getByEmail('any_email@mail.com');
 
       expect(result).toStrictEqual(mockUser());
     });
 
     test('Should return null if user does not exist', async () => {
       vi.mocked(prisma.user.findUnique).mockResolvedValueOnce(null);
-      const result = await sut.getByEmail('any_email');
+      const result = await sut.getByEmail('any_email@mail.com');
 
       expect(result).toBeNull();
     });
@@ -60,19 +86,20 @@ describe('UserRepository', () => {
         throw new Error();
       });
 
-      expect(sut.getByEmail('any_email')).rejects.toThrow();
+      expect(sut.getByEmail('any_email@mail.com')).rejects.toThrow();
     });
   });
 
   describe('create', () => {
     test('Should call prisma created method with correct data', async () => {
-      await sut.create(mockSighUpParams());
+      await sut.create(mockSignUpParams());
 
       expect(prisma.user.create).toHaveBeenCalledWith({
         data: {
-          email: 'any_email',
+          email: 'any_email@mail.com',
           name: 'any_name',
           password: 'any_password',
+          serviceType: 'any_service_type',
         },
       });
     });
@@ -80,7 +107,7 @@ describe('UserRepository', () => {
     test('Should return user returned by prisma created method', async () => {
       vi.mocked(prisma.user.create).mockResolvedValueOnce(mockUser());
 
-      const result = await sut.create(mockSighUpParams());
+      const result = await sut.create(mockSignUpParams());
 
       expect(result).toStrictEqual(mockUser());
     });
@@ -90,7 +117,7 @@ describe('UserRepository', () => {
         throw new Error();
       });
 
-      expect(sut.create(mockSighUpParams())).rejects.toThrow();
+      expect(sut.create(mockSignUpParams())).rejects.toThrow();
     });
   });
 });
