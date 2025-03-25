@@ -16,3 +16,8 @@ export class UnauthorizedError extends HttpError {
     super(401, 'Unauthorized');
   }
 }
+export class UnprocessableEntity extends HttpError {
+  constructor(message: string) {
+    super(422, message);
+  }
+}
