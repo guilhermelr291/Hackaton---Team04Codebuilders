@@ -9,10 +9,11 @@ import { HashComparer } from '../protocols/hash-comparer';
 import { Encrypter } from '../protocols/encrypter';
 
 export type SignUpParams = {
+  name: string;
   email: string;
+  serviceType: string;
   password: string;
   confirmPassword: string;
-  name: string;
 };
 
 export type LoginParams = {

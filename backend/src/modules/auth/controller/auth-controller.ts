@@ -27,11 +27,7 @@ export class AuthController {
     }
   }
 
-  async login(
-    req: Request,
-    res: Response<{ token: string; user: User }>,
-    next: NextFunction
-  ) {
+  async login(req: Request, res: Response, next: NextFunction) {
     try {
       const userAndToken = await this.authService.login(req.body);
 
