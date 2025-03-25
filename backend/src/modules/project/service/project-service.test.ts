@@ -1,5 +1,6 @@
 import { describe, beforeEach, test, vi, expect } from 'vitest';
 import { CreateProjectParams, ProjectService } from './project-service';
+import { UnprocessableEntity } from '../../../common/errors/http-errors';
 
 const mockProjectRepository = {
   create: vi.fn(),
@@ -34,6 +35,14 @@ describe('ProjectService', () => {
       await sut.create(createProjectParams);
 
       expect(getByIdSpy).toHaveBeenCalledWith(createProjectParams.clientId);
+    });
+
+    test('Should throw UnprocessableEntity if client does not exist', async () => {
+      vi.spyOn(mockClientRepository, 'getById').mockResolvedValueOnce(null);
+
+      await expect(sut.create(mockCreateProjectParams())).rejects.toThrow(
+        UnprocessableEntity
+      );
     });
   });
 });
