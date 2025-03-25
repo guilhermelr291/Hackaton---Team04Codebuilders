@@ -20,7 +20,7 @@ model User {
   city          String?
   neighborhood  String?
   postalCode    String?
-  isEmailVerify  Boolean @default(false)
+  isEmailVerified  Boolean @default(false)
   project     Project[]
   updatedAt        DateTime            @updatedAt
   createdAt        DateTime            @default(now())
