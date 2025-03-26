@@ -45,5 +45,18 @@ describe('ProjectController', () => {
 
       expect(createSpy).toHaveBeenCalledWith({ userId, ...body });
     });
+
+    test('Should return 201 status with success message on success', async () => {
+      await sut.create(
+        mockRequest as Request,
+        mockResponse as Response,
+        mockNext
+      );
+
+      expect(mockResponse.status).toHaveBeenCalledWith(201);
+      expect(mockResponse.json).toHaveBeenCalledWith({
+        message: 'Projeto criado com sucesso!',
+      });
+    });
   });
 });
