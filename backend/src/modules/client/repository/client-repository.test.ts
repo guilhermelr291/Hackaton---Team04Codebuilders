@@ -15,6 +15,12 @@ vi.mock('../../../prisma/db', () => ({
   },
 }));
 
+const mockClient = () => ({
+  id: 1,
+  name: 'any_name',
+  email: 'any_email@mail.com',
+});
+
 describe('ClientRepository', () => {
   let clientRepository: ClientRepository;
 
@@ -30,6 +36,12 @@ describe('ClientRepository', () => {
       await clientRepository.getById(id);
 
       expect(prisma.client.findUnique).toHaveBeenCalledWith({ where: { id } });
+    });
+
+    test('Should return a client if client exists', async () => {
+      const result = await clientRepository.getById(1);
+
+      expect(result).toEqual(mockClient());
     });
   });
 });
