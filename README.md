@@ -55,7 +55,7 @@ Empresas e prestadores de serviço muitas vezes enfrentam dificuldades para gere
 - **Prisma**: ORM para Node.js e TypeScript que simplifica a interação com bancos de dados PostgreeSQL, proporcionando consultas eficientes e segurança.
 - **Autenticação**: Baseeada em token JWT.
   
-#### **Funcionalidades Principais**
+### **Funcionalidades Principais**
 
 - **Registro de Usuário**: Cadastro de novos usuários.
 - **Login de Usuário**: Autenticação segura para acesso às funcionalidades, tambem sendo possível realizar o login via SSO (SingleSignOn)
