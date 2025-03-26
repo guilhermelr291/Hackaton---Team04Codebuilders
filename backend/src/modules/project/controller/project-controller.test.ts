@@ -58,5 +58,20 @@ describe('ProjectController', () => {
         message: 'Projeto criado com sucesso!',
       });
     });
+
+    test('Should call next with error if projectService.create throws', async () => {
+      const error = new Error();
+      vi.spyOn(mockProjectService, 'create').mockImplementationOnce(() => {
+        throw error;
+      });
+
+      await sut.create(
+        mockRequest as Request,
+        mockResponse as Response,
+        mockNext
+      );
+
+      expect(mockNext).toHaveBeenCalledWith(error);
+    });
   });
 });
