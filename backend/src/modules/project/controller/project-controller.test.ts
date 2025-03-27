@@ -275,5 +275,20 @@ describe('ProjectController', () => {
 
       expect(getByIdSpy).toHaveBeenCalledWith(Number(params!.id), userId);
     });
+
+    test('Should call next with error if projectService.getById throws', async () => {
+      const error = new Error();
+      vi.spyOn(mockProjectService, 'getById').mockImplementationOnce(() => {
+        throw error;
+      });
+
+      await sut.getById(
+        mockRequest as Request,
+        mockResponse as Response,
+        mockNext
+      );
+
+      expect(mockNext).toHaveBeenCalledWith(error);
+    });
   });
 });
