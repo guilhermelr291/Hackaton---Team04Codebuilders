@@ -47,6 +47,9 @@ export class ProjectService {
     await this.projectRepository.create(data);
   }
   async update(data: updateProjectParams) {
+    const project = await this.projectRepository.getById(data.id);
+    if (!project) throw new NotFound('Projeto não encontrado');
+
     await this.projectRepository.update(data);
   }
   async delete(id: number, userId: number) {
