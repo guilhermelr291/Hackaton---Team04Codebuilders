@@ -7,6 +7,16 @@ const mockProjectService = {
   create: vi.fn(),
   update: vi.fn(),
   delete: vi.fn(),
+  getUserProjects: vi.fn().mockResolvedValue([
+    {
+      id: 1,
+      name: 'any_name',
+      clientId: 1,
+      userId: 1,
+      status: 'IN_PROGRESS',
+      price: 10,
+    },
+  ]),
 } as unknown as ProjectService;
 
 describe('ProjectController', () => {
@@ -179,6 +189,24 @@ describe('ProjectController', () => {
       expect(mockResponse.json).toHaveBeenCalledWith({
         message: 'Projeto excluído com sucesso!',
       });
+    });
+  });
+  describe('getUserProjects()', () => {
+    test('Should call projectService.getUserProjects with correct value', async () => {
+      const getUserProjectsSpy = vi.spyOn(
+        mockProjectService,
+        'getUserProjects'
+      );
+
+      await sut.getUserProjects(
+        mockRequest as Request,
+        mockResponse as Response,
+        mockNext
+      );
+
+      const { userId } = mockRequest;
+
+      expect(getUserProjectsSpy).toHaveBeenCalledWith(userId);
     });
   });
 });
