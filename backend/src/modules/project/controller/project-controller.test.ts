@@ -152,5 +152,20 @@ describe('ProjectController', () => {
 
       expect(deleteSpy).toHaveBeenCalledWith(Number(params!.id), userId);
     });
+
+    test('Should call next with error if projectService.delete throws', async () => {
+      const error = new Error();
+      vi.spyOn(mockProjectService, 'delete').mockImplementationOnce(() => {
+        throw error;
+      });
+
+      await sut.delete(
+        mockRequest as Request,
+        mockResponse as Response,
+        mockNext
+      );
+
+      expect(mockNext).toHaveBeenCalledWith(error);
+    });
   });
 });
