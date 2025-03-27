@@ -224,5 +224,25 @@ describe('ProjectController', () => {
 
       expect(mockNext).toHaveBeenCalledWith(error);
     });
+
+    test('Should return 200 status with projects data on success', async () => {
+      await sut.getUserProjects(
+        mockRequest as Request,
+        mockResponse as Response,
+        mockNext
+      );
+
+      expect(mockResponse.status).toHaveBeenCalledWith(200);
+      expect(mockResponse.json).toHaveBeenCalledWith([
+        {
+          id: 1,
+          name: 'any_name',
+          clientId: 1,
+          userId: 1,
+          status: 'IN_PROGRESS',
+          price: 10,
+        },
+      ]);
+    });
   });
 });
