@@ -24,6 +24,12 @@ export const authMiddleware = async (
 
     req.userId = user.id;
 
+    const updatedToken = jwt.sign({ id: user.id }, process.env.JWT_SECRET!, {
+      expiresIn: '24h',
+    });
+
+    res.setHeader('Authorization', `Bearer ${updatedToken}`);
+
     next();
   } catch (error) {
     res.status(401).json({ message: 'Unauthorized' });

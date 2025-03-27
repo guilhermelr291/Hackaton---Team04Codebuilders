@@ -8,6 +8,6 @@ export class JwtAdapter implements Encrypter {
   }
 
   encrypt(data: {}): string {
-    return jwt.sign(data, this.SECRET, { expiresIn: '8h' });
+    return jwt.sign(data, this.SECRET, { expiresIn: '24h' });
   }
 }

@@ -24,7 +24,7 @@ describe('JwtAdapter', () => {
       expect(jwt.sign).toHaveBeenCalledWith(
         { field: 'any_value' },
         process.env.JWT_SECRET,
-        { expiresIn: '8h' }
+        { expiresIn: '24h' }
       );
     });
     test('Should return encoded value on success', () => {
