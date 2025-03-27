@@ -40,6 +40,15 @@ Empresas e prestadores de serviço muitas vezes enfrentam dificuldades para gere
 
 ---
 
+### **Funcionalidades Principais**
+
+- **Registro de Usuário**: Cadastro de novos usuários.
+- **Login de Usuário**: Autenticação segura para acesso às funcionalidades, tambem sendo possível realizar o login via SSO (SingleSignOn)
+- **Gerenciamento de Clientes**: CRUD para gerir clientes, incluindo informações pessoais e status.
+- **Gerenciamento de Projetos**: CRUD para gerir projetos, incluindo informações de preço, prazo e status.
+- **Controle de tempo**: Registro e controle do tempo investido por projeto.
+- **Dashboard inteligente**: Informações de faturamento, status, quantidade de projetos, prazo e esforço.
+
 ## Tecnologias Utilizadas
 
 ### **Frontend**
@@ -56,15 +65,6 @@ Empresas e prestadores de serviço muitas vezes enfrentam dificuldades para gere
 - **Prisma**: ORM para Node.js e TypeScript que simplifica a interação com bancos de dados PostgreeSQL, proporcionando consultas eficientes e segurança.
 - **Autenticação**: Baseeada em token JWT.
   
-### **Funcionalidades Principais**
-
-- **Registro de Usuário**: Cadastro de novos usuários.
-- **Login de Usuário**: Autenticação segura para acesso às funcionalidades, tambem sendo possível realizar o login via SSO (SingleSignOn)
-- **Gerenciamento de Clientes**: CRUD para gerir clientes, incluindo informações pessoais e status.
-- **Gerenciamento de Projetos**: CRUD para gerir projetos, incluindo informações de preço, prazo e status.
-- **Controle de tempo**: Registro e controle do tempo investido por projeto.
-- **Dashboard inteligente**: Informações de faturamento, status, quantidade de projetos, prazo e esforço.
-
 ### **Testes**
 #### **Abordagem de Testes**
 Foram implementados **testes unitários** e de **integração** em toda a aplicação para garantir a qualidade e a robustez do sistema.
