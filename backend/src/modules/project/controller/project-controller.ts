@@ -20,4 +20,18 @@ export class ProjectController {
       next(error);
     }
   }
+
+  async update(req: Request, res: Response, next: NextFunction) {
+    try {
+      const data = req.body;
+      const id = Number(req.params.id);
+
+      await this.projectService.update(id, data); //TODO: ver se vou retornar ou n o projeto atualizado.
+
+      res.status(200).json({ message: 'Projeto atualizado com sucesso!' });
+    } catch (error) {
+      console.log('Erro ao atualizar projeto: ', error);
+      next(error);
+    }
+  }
 }
