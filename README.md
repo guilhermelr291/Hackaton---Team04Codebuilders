@@ -1,4 +1,5 @@
 # **FreelaCRM**
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 
 **FreelaCRM** é uma solução eficiente para otimizar a gestão de profissionais freelancers, garantindo maior controle sobre projetos, clientes e faturamento.
 
