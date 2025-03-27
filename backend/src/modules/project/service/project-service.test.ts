@@ -139,5 +139,11 @@ describe('ProjectService', () => {
 
       expect(getByIdSpy).toHaveBeenCalledWith(id);
     });
+
+    test('Should throws NotFound error if ProjectRepository.getById returns falsy', async () => {
+      vi.spyOn(mockProjectRepository, 'getById').mockResolvedValueOnce(false);
+
+      expect(sut.delete(1, 2)).rejects.toThrow(NotFound);
+    });
   });
 });
