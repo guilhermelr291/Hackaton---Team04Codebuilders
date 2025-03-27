@@ -62,4 +62,17 @@ export class ProjectController {
       next(error);
     }
   }
+  async getById(req: Request, res: Response, next: NextFunction) {
+    try {
+      const userId = req.userId!;
+      const id = Number(req.params.id);
+
+      const project = await this.projectService.getById(id, userId);
+
+      res.status(200).json(project);
+    } catch (error) {
+      console.log('Erro ao excluir projeto: ', error);
+      next(error);
+    }
+  }
 }
