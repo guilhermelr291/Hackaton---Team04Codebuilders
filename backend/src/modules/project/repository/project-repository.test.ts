@@ -112,5 +112,13 @@ describe('ProjectRepository', () => {
 
       expect(result).toStrictEqual(mockProjectModel());
     });
+
+    test('Should throw if prisma throws', async () => {
+      vi.mocked(prisma.project.update).mockImplementationOnce(() => {
+        throw new Error();
+      });
+
+      expect(sut.update(mockUpdateProjectParams())).rejects.toThrow();
+    });
   });
 });
