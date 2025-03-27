@@ -105,6 +105,13 @@ describe('ProjectService', () => {
 
       expect(getByIdSpy).toHaveBeenCalledWith(updateProjectParams.id);
     });
+    test('Should throws NotFound error if ProjectRepository.getById returns falsy', async () => {
+      vi.spyOn(mockProjectRepository, 'getById').mockResolvedValueOnce(false);
+
+      await expect(sut.update(mockUpdateProjectParams())).rejects.toThrow(
+        NotFound
+      );
+    });
 
     test('Should throw if projectRepository.update throws', async () => {
       vi.spyOn(mockProjectRepository, 'update').mockImplementationOnce(() => {
