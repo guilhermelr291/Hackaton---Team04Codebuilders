@@ -26,6 +26,24 @@ vi.mock('../../../prisma/db', () => ({
         price: 10,
       }),
       delete: vi.fn(),
+      findMany: vi.fn().mockResolvedValue([
+        {
+          id: 1,
+          name: 'any_name',
+          clientId: 1,
+          userId: 1,
+          status: 'IN_PROGRESS',
+          price: 10,
+        },
+        {
+          id: 2,
+          name: 'another_name',
+          clientId: 1,
+          userId: 1,
+          status: 'IN_PROGRESS',
+          price: 5,
+        },
+      ]),
     },
   },
 }));
@@ -52,6 +70,25 @@ const mockUpdateProjectParams = (): updateProjectParams => ({
   status: 'IN_PROGRESS',
   price: 10,
 });
+
+const mockProjects = () => [
+  {
+    id: 1,
+    name: 'any_name',
+    clientId: 1,
+    userId: 1,
+    status: 'IN_PROGRESS',
+    price: 10,
+  },
+  {
+    id: 2,
+    name: 'another_name',
+    clientId: 1,
+    userId: 1,
+    status: 'IN_PROGRESS',
+    price: 5,
+  },
+];
 
 describe('ProjectRepository', () => {
   let sut: ProjectRepository;
@@ -131,6 +168,17 @@ describe('ProjectRepository', () => {
       });
 
       expect(sut.delete(1, 2)).rejects.toThrow();
+    });
+  });
+
+  describe('getUserProjects()', () => {
+    test('Should call prisma with correct value', async () => {
+      const userId = 1;
+      await sut.getUserProjects(userId);
+
+      expect(prisma.project.findMany).toHaveBeenCalledWith({
+        where: { userId },
+      });
     });
   });
 });
