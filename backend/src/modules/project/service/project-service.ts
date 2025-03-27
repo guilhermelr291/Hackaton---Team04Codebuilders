@@ -15,6 +15,17 @@ export type CreateProjectParams = {
   price?: number;
 };
 
+export type updateProjectParams = {
+  name: string;
+  status?:
+    | 'PLANNING'
+    | 'IN_PROGRESS'
+    | 'COMPLETED'
+    | 'PENDING_PAYMENT'
+    | 'OVERDUE';
+  price?: number;
+};
+
 export class ProjectService {
   constructor(
     private readonly projectRepository: ProjectRepository,
@@ -29,5 +40,8 @@ export class ProjectService {
     if (!client) throw new UnprocessableEntity('Cliente não encontrado');
 
     await this.projectRepository.create(data);
+  }
+  async update(id: number, data: updateProjectParams) {
+    return await this.projectRepository.update(id, data);
   }
 }
