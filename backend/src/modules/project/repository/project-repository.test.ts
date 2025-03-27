@@ -8,13 +8,24 @@ import {
   afterAll,
 } from 'vitest';
 import prisma from '../../../prisma/db';
-import { CreateProjectParams } from '../service/project-service';
+import {
+  CreateProjectParams,
+  updateProjectParams,
+} from '../service/project-service';
 import { ProjectRepository } from './project-repository';
 
 vi.mock('../../../prisma/db', () => ({
   default: {
     project: {
       create: vi.fn().mockResolvedValue({
+        id: 1,
+        name: 'any_name',
+        clientId: 1,
+        userId: 1,
+        status: 'IN_PROGRESS',
+        price: 10,
+      }),
+      update: vi.fn().mockResolvedValue({
         id: 1,
         name: 'any_name',
         clientId: 1,
@@ -41,6 +52,13 @@ const mockCreateProjectParams = (): CreateProjectParams => ({
   status: 'IN_PROGRESS',
   price: 10,
 });
+const mockUpdateProjectParams = (): updateProjectParams => ({
+  id: 1,
+  userId: 1,
+  name: 'any_name',
+  status: 'IN_PROGRESS',
+  price: 10,
+});
 
 describe('ProjectRepository', () => {
   let sut: ProjectRepository;
@@ -51,7 +69,7 @@ describe('ProjectRepository', () => {
     sut = new ProjectRepository();
   });
 
-  describe('create', () => {
+  describe('create()', () => {
     test('Should call prisma with correct params', async () => {
       const createProjectParams = mockCreateProjectParams();
 
@@ -73,6 +91,20 @@ describe('ProjectRepository', () => {
       });
 
       expect(sut.create(mockCreateProjectParams())).rejects.toThrow();
+    });
+  });
+  describe('update()', () => {
+    test('Should call prisma with correct params', async () => {
+      const updateProjectParams = mockUpdateProjectParams();
+
+      await sut.update(updateProjectParams);
+
+      const { id, userId, ...projectData } = updateProjectParams;
+
+      expect(prisma.project.update).toHaveBeenCalledWith({
+        where: { id, userId },
+        data: projectData,
+      });
     });
   });
 });
