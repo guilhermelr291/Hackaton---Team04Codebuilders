@@ -101,5 +101,18 @@ describe('ProjectController', () => {
         ...body,
       });
     });
+
+    test('Should return 200 status with success message on success', async () => {
+      await sut.update(
+        mockRequest as Request,
+        mockResponse as Response,
+        mockNext
+      );
+
+      expect(mockResponse.status).toHaveBeenCalledWith(200);
+      expect(mockResponse.json).toHaveBeenCalledWith({
+        message: 'Projeto atualizado com sucesso!',
+      });
+    });
   });
 });
