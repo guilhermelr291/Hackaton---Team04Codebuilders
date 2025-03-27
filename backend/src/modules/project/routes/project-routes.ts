@@ -17,4 +17,7 @@ export default (router: Router): void => {
     validate(UpdateProjectSchema),
     (req, res, next) => projectController.update(req, res, next)
   );
+  router.delete('/projects/:id', (req, res, next) =>
+    projectController.delete(req, res, next)
+  );
 };
