@@ -1,12 +1,4 @@
-import {
-  test,
-  describe,
-  beforeEach,
-  vi,
-  expect,
-  beforeAll,
-  afterAll,
-} from 'vitest';
+import { test, describe, beforeEach, vi, expect } from 'vitest';
 import prisma from '../../../prisma/db';
 import {
   CreateProjectParams,
@@ -33,6 +25,7 @@ vi.mock('../../../prisma/db', () => ({
         status: 'IN_PROGRESS',
         price: 10,
       }),
+      delete: vi.fn(),
     },
   },
 }));
@@ -119,6 +112,17 @@ describe('ProjectRepository', () => {
       });
 
       expect(sut.update(mockUpdateProjectParams())).rejects.toThrow();
+    });
+  });
+  describe('delete()', () => {
+    test('Should call prisma with correct value', async () => {
+      const id = 1;
+      const userId = 2;
+      await sut.delete(id, userId);
+
+      expect(prisma.project.delete).toHaveBeenCalledWith({
+        where: { id, userId },
+      });
     });
   });
 });
