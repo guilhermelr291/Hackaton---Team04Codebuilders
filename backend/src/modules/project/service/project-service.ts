@@ -47,13 +47,13 @@ export class ProjectService {
     await this.projectRepository.create(data);
   }
   async update(data: updateProjectParams) {
-    const project = await this.projectRepository.getById(data.id);
+    const project = await this.projectRepository.getById(data.id, data.userId);
     if (!project) throw new NotFound('Projeto não encontrado');
 
     await this.projectRepository.update(data);
   }
   async delete(id: number, userId: number) {
-    const project = await this.projectRepository.getById(id);
+    const project = await this.projectRepository.getById(id, userId);
     if (!project) throw new NotFound('Projeto não encontrado');
 
     await this.projectRepository.delete(id, userId);
@@ -61,5 +61,10 @@ export class ProjectService {
   async getUserProjects(userId: number) {
     const projects = await this.projectRepository.getUserProjects(userId);
     return projects;
+  }
+  async getById(id: number, userId: number) {
+    const project = await this.projectRepository.getById(id, userId);
+    if (!project) throw new NotFound('Projeto não encontrado');
+    return project;
   }
 }
