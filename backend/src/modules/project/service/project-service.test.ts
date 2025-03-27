@@ -155,5 +155,16 @@ describe('ProjectService', () => {
       });
       expect(sut.delete(1, 2)).rejects.toThrow();
     });
+
+    test('Should call projectRepository.delete with correct values', async () => {
+      const deleteSpy = vi.spyOn(mockProjectRepository, 'delete');
+
+      const id = 1;
+      const userId = 2;
+
+      await sut.delete(id, userId);
+
+      expect(deleteSpy).toHaveBeenCalledWith(id, userId);
+    });
   });
 });
