@@ -114,5 +114,20 @@ describe('ProjectController', () => {
         message: 'Projeto atualizado com sucesso!',
       });
     });
+
+    test('Should call next with error if projectService.update throws', async () => {
+      const error = new Error();
+      vi.spyOn(mockProjectService, 'update').mockImplementationOnce(() => {
+        throw error;
+      });
+
+      await sut.update(
+        mockRequest as Request,
+        mockResponse as Response,
+        mockNext
+      );
+
+      expect(mockNext).toHaveBeenCalledWith(error);
+    });
   });
 });
