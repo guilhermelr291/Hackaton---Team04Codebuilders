@@ -58,4 +58,8 @@ export class ProjectService {
 
     await this.projectRepository.delete(id, userId);
   }
+  async getUserProjects(userId: number) {
+    const projects = await this.projectRepository.getUserProjects(userId);
+    return projects;
+  }
 }
