@@ -21,7 +21,7 @@ Seja mais produtivo e tenha total controle sobre seu trabalho com o FreelaCRM!
 ## Índice
 
 - [Introdução](#introdução)
-- [Funcionalidades principais](#funcionalidadesprincipais)
+- [Funcionalidades principais](#funcionalidades-principais)
 - [Tecnologias Utilizadas](#tecnologias-utilizadas)
   - [Frontend](#frontend)
   - [Backend](#backend)
