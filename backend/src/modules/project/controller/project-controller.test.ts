@@ -167,5 +167,18 @@ describe('ProjectController', () => {
 
       expect(mockNext).toHaveBeenCalledWith(error);
     });
+
+    test('Should return 200 status with success message on success', async () => {
+      await sut.delete(
+        mockRequest as Request,
+        mockResponse as Response,
+        mockNext
+      );
+
+      expect(mockResponse.status).toHaveBeenCalledWith(200);
+      expect(mockResponse.json).toHaveBeenCalledWith({
+        message: 'Projeto excluído com sucesso!',
+      });
+    });
   });
 });
