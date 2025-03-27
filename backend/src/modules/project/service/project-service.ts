@@ -44,6 +44,6 @@ export class ProjectService {
     await this.projectRepository.create(data);
   }
   async update(data: updateProjectParams) {
-    return await this.projectRepository.update(data);
+    await this.projectRepository.update(data);
   }
 }
