@@ -208,5 +208,21 @@ describe('ProjectController', () => {
 
       expect(getUserProjectsSpy).toHaveBeenCalledWith(userId);
     });
+
+    test('Should call next with error if projectService.getUserProjects throws', async () => {
+      const error = new Error();
+      vi.spyOn(mockProjectService, 'getUserProjects').mockImplementationOnce(
+        () => {
+          throw error;
+        }
+      );
+      await sut.getUserProjects(
+        mockRequest as Request,
+        mockResponse as Response,
+        mockNext
+      );
+
+      expect(mockNext).toHaveBeenCalledWith(error);
+    });
   });
 });
