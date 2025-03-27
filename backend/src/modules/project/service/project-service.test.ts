@@ -200,5 +200,20 @@ describe('ProjectService', () => {
       const userId = 1;
       expect(sut.getUserProjects(userId)).rejects.toThrow();
     });
+    test('Should return correct value', async () => {
+      const userId = 1;
+      const result = await sut.getUserProjects(userId);
+
+      expect(result).toEqual([
+        {
+          id: 1,
+          name: 'any_name',
+          clientId: 1,
+          userId: 1,
+          status: 'IN_PROGRESS',
+          price: 10,
+        },
+      ]);
+    });
   });
 });
