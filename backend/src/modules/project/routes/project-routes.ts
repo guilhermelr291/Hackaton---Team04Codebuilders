@@ -15,6 +15,9 @@ export default (router: Router): void => {
   router.get('/projects', (req, res, next) =>
     projectController.getUserProjects(req, res, next)
   );
+  router.get('/projects/:id', (req, res, next) =>
+    projectController.getById(req, res, next)
+  );
   router.patch(
     '/projects/:id',
     validate(UpdateProjectSchema),
