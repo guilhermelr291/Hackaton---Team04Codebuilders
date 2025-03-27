@@ -149,5 +149,11 @@ describe('ProjectService', () => {
       });
       expect(sut.delete(1, 2)).rejects.toThrow();
     });
+    test('Should throw if projectRepository.delete throws', async () => {
+      vi.spyOn(mockProjectRepository, 'delete').mockImplementationOnce(() => {
+        throw new Error();
+      });
+      expect(sut.delete(1, 2)).rejects.toThrow();
+    });
   });
 });
