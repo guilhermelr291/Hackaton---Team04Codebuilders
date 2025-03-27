@@ -12,7 +12,14 @@ import {
 const mockProjectRepository = {
   create: vi.fn(),
   update: vi.fn(),
-  getById: vi.fn().mockResolvedValue(true),
+  getById: vi.fn().mockResolvedValue({
+    id: 1,
+    name: 'any_name',
+    clientId: 1,
+    userId: 1,
+    status: 'IN_PROGRESS',
+    price: 10,
+  }),
   delete: vi.fn(),
   getUserProjects: vi.fn().mockResolvedValue([
     {
@@ -236,6 +243,21 @@ describe('ProjectService', () => {
       const userId = 2;
 
       expect(sut.getById(id, userId)).rejects.toThrow(error);
+    });
+    test('Should return correct value', async () => {
+      const id = 1;
+      const userId = 2;
+
+      const result = await sut.getById(id, userId);
+
+      expect(result).toStrictEqual({
+        id: 1,
+        name: 'any_name',
+        clientId: 1,
+        userId: 1,
+        status: 'IN_PROGRESS',
+        price: 10,
+      });
     });
   });
 });
