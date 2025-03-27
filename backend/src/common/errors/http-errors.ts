@@ -21,3 +21,8 @@ export class UnprocessableEntity extends HttpError {
     super(422, message);
   }
 }
+export class NotFound extends HttpError {
+  constructor(message: string) {
+    super(404, message);
+  }
+}

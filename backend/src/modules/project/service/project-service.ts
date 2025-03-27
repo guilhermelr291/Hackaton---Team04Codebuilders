@@ -1,4 +1,7 @@
-import { UnprocessableEntity } from '../../../common/errors/http-errors';
+import {
+  NotFound,
+  UnprocessableEntity,
+} from '../../../common/errors/http-errors';
 import { ClientRepository } from '../../client/repository/client-repository';
 import { ProjectRepository } from '../repository/project-repository';
 
@@ -45,5 +48,11 @@ export class ProjectService {
   }
   async update(data: updateProjectParams) {
     await this.projectRepository.update(data);
+  }
+  async delete(id: number, userId: number) {
+    const project = await this.projectRepository.getById(id);
+    if (!project) throw new NotFound('Projeto não encontrado');
+
+    await this.projectRepository.delete(id, userId);
   }
 }
