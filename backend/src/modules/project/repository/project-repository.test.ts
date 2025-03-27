@@ -224,5 +224,13 @@ describe('ProjectRepository', () => {
       const userId = 2;
       expect(sut.getById(id, userId)).rejects.toThrow();
     });
+
+    test('Should return correct value', async () => {
+      const id = 1;
+      const userId = 2;
+      const result = await sut.getById(id, userId);
+
+      expect(result).toStrictEqual(mockProjectModel());
+    });
   });
 });
