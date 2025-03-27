@@ -92,5 +92,13 @@ describe('ProjectService', () => {
 
       expect(createSpy).toHaveBeenCalledWith(updateProjectParams);
     });
+
+    test('Should throw if projectRepository.update throws', async () => {
+      vi.spyOn(mockProjectRepository, 'update').mockImplementationOnce(() => {
+        throw new Error();
+      });
+
+      await expect(sut.update(mockUpdateProjectParams())).rejects.toThrow();
+    });
   });
 });
