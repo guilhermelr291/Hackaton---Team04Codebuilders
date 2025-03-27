@@ -17,6 +17,14 @@ const mockProjectService = {
       price: 10,
     },
   ]),
+  getById: vi.fn().mockResolvedValue({
+    id: 1,
+    name: 'any_name',
+    clientId: 1,
+    userId: 1,
+    status: 'IN_PROGRESS',
+    price: 10,
+  }),
 } as unknown as ProjectService;
 
 describe('ProjectController', () => {
@@ -243,6 +251,29 @@ describe('ProjectController', () => {
           price: 10,
         },
       ]);
+    });
+  });
+
+  describe('getById()', () => {
+    beforeEach(() => {
+      mockRequest = {
+        params: { id: '1' },
+        userId: 1,
+      };
+    });
+
+    test('Should call projectService.getById with correct values', async () => {
+      const getByIdSpy = vi.spyOn(mockProjectService, 'getById');
+
+      await sut.getById(
+        mockRequest as Request,
+        mockResponse as Response,
+        mockNext
+      );
+
+      const { userId, params } = mockRequest;
+
+      expect(getByIdSpy).toHaveBeenCalledWith(Number(params!.id), userId);
     });
   });
 });
