@@ -17,4 +17,12 @@ export class ProjectRepository {
     });
     return project;
   }
+
+  async getById(id: number) {
+    return await prisma.project.findUnique({ where: { id } });
+  }
+
+  async delete(id: number, userId: number) {
+    await prisma.project.delete({ where: { id, userId } });
+  }
 }
