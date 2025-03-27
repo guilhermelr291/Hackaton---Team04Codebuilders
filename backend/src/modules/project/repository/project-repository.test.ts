@@ -189,5 +189,11 @@ describe('ProjectRepository', () => {
 
       expect(sut.getUserProjects(userId)).rejects.toThrow();
     });
+    test('Should return correct projects', async () => {
+      const userId = 1;
+      const result = await sut.getUserProjects(userId);
+
+      expect(result).toStrictEqual(mockProjects());
+    });
   });
 });
