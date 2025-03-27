@@ -9,6 +9,7 @@ import { UnprocessableEntity } from '../../../common/errors/http-errors';
 const mockProjectRepository = {
   create: vi.fn(),
   update: vi.fn(),
+  getById: vi.fn().mockResolvedValue(true),
 };
 const mockClientRepository = {
   getById: vi.fn().mockResolvedValue(true),
@@ -91,6 +92,15 @@ describe('ProjectService', () => {
       await sut.update(updateProjectParams);
 
       expect(createSpy).toHaveBeenCalledWith(updateProjectParams);
+    });
+
+    test('Should call projectRepository.getById with correct value', async () => {
+      const getByIdSpy = vi.spyOn(mockProjectRepository, 'getById');
+      const updateProjectParams = mockUpdateProjectParams();
+
+      await sut.update(updateProjectParams);
+
+      expect(getByIdSpy).toHaveBeenCalledWith(updateProjectParams.id);
     });
 
     test('Should throw if projectRepository.update throws', async () => {
