@@ -106,5 +106,11 @@ describe('ProjectRepository', () => {
         data: projectData,
       });
     });
+
+    test('Should return updated project', async () => {
+      const result = await sut.update(mockUpdateProjectParams());
+
+      expect(result).toStrictEqual(mockProjectModel());
+    });
   });
 });
