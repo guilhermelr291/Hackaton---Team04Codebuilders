@@ -12,6 +12,9 @@ export default (router: Router): void => {
   router.post('/projects', validate(CreateProjectSchema), (req, res, next) =>
     projectController.create(req, res, next)
   );
+  router.get('/projects', (req, res, next) =>
+    projectController.getUserProjects(req, res, next)
+  );
   router.patch(
     '/projects/:id',
     validate(UpdateProjectSchema),
