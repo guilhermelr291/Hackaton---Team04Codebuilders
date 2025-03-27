@@ -36,4 +36,18 @@ export class ProjectController {
       next(error);
     }
   }
+
+  async delete(req: Request, res: Response, next: NextFunction) {
+    try {
+      const id = Number(req.params.id);
+      const userId = req.userId!;
+
+      await this.projectService.delete(id, userId);
+
+      res.status(200).json({ message: 'Projeto excluído com sucesso!' });
+    } catch (error) {
+      console.log('Erro ao excluir projeto: ', error);
+      next(error);
+    }
+  }
 }
