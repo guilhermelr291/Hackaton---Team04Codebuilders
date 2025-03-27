@@ -44,6 +44,14 @@ vi.mock('../../../prisma/db', () => ({
           price: 5,
         },
       ]),
+      findUnique: vi.fn().mockResolvedValue({
+        id: 1,
+        name: 'any_name',
+        clientId: 1,
+        userId: 1,
+        status: 'IN_PROGRESS',
+        price: 10,
+      }),
     },
   },
 }));
@@ -152,7 +160,7 @@ describe('ProjectRepository', () => {
     });
   });
   describe('delete()', () => {
-    test('Should call prisma with correct value', async () => {
+    test('Should call prisma with correct values', async () => {
       const id = 1;
       const userId = 2;
       await sut.delete(id, userId);
@@ -194,6 +202,18 @@ describe('ProjectRepository', () => {
       const result = await sut.getUserProjects(userId);
 
       expect(result).toStrictEqual(mockProjects());
+    });
+  });
+
+  describe('getById()', () => {
+    test('Should call prisma with correct values', async () => {
+      const id = 1;
+      const userId = 2;
+      await sut.getById(id, userId);
+
+      expect(prisma.project.findUnique).toHaveBeenCalledWith({
+        where: { id, userId },
+      });
     });
   });
 });
