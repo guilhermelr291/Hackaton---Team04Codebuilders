@@ -13,6 +13,7 @@ const mockProjectRepository = {
   create: vi.fn(),
   update: vi.fn(),
   getById: vi.fn().mockResolvedValue(true),
+  delete: vi.fn(),
 };
 const mockClientRepository = {
   getById: vi.fn().mockResolvedValue(true),
@@ -126,6 +127,17 @@ describe('ProjectService', () => {
       });
 
       await expect(sut.update(mockUpdateProjectParams())).rejects.toThrow();
+    });
+  });
+  describe('delete()', () => {
+    test('Should call projectRepository.getById with correct value', async () => {
+      const getByIdSpy = vi.spyOn(mockProjectRepository, 'getById');
+      const id = 1;
+      const userId = 2;
+
+      await sut.delete(id, userId);
+
+      expect(getByIdSpy).toHaveBeenCalledWith(id);
     });
   });
 });
