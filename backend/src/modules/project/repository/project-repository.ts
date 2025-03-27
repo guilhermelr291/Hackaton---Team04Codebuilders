@@ -9,8 +9,12 @@ export class ProjectRepository {
     const project = await prisma.project.create({ data });
     return project;
   }
-  async update(id: number, data: updateProjectParams) {
-    const project = await prisma.project.update({ where: { id }, data });
+  async update(data: updateProjectParams) {
+    const { id, userId, ...projectData } = data;
+    const project = await prisma.project.update({
+      where: { id, userId },
+      data: projectData,
+    });
     return project;
   }
 }

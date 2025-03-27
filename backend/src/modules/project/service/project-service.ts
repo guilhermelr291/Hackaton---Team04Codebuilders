@@ -16,6 +16,8 @@ export type CreateProjectParams = {
 };
 
 export type updateProjectParams = {
+  id: number;
+  userId: number;
   name: string;
   status?:
     | 'PLANNING'
@@ -41,7 +43,7 @@ export class ProjectService {
 
     await this.projectRepository.create(data);
   }
-  async update(id: number, data: updateProjectParams) {
-    return await this.projectRepository.update(id, data);
+  async update(data: updateProjectParams) {
+    return await this.projectRepository.update(data);
   }
 }

@@ -26,7 +26,9 @@ export class ProjectController {
       const data = req.body;
       const id = Number(req.params.id);
 
-      await this.projectService.update(id, data); //TODO: ver se vou retornar ou n o projeto atualizado.
+      const dataToUpdate = { id, userId: req.userId, ...data };
+
+      await this.projectService.update(dataToUpdate); //TODO: ver se vou retornar ou n o projeto atualizado.
 
       res.status(200).json({ message: 'Projeto atualizado com sucesso!' });
     } catch (error) {
