@@ -190,5 +190,15 @@ describe('ProjectService', () => {
 
       expect(getUserProjectsSpy).toHaveBeenCalledWith(userId);
     });
+
+    test('Should throw if projectRepository.getUserProjects throws', async () => {
+      vi.spyOn(mockProjectRepository, 'getUserProjects').mockImplementationOnce(
+        () => {
+          throw new Error();
+        }
+      );
+      const userId = 1;
+      expect(sut.getUserProjects(userId)).rejects.toThrow();
+    });
   });
 });
