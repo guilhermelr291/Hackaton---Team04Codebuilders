@@ -19,6 +19,8 @@ export function validate(schema: ZodSchema<any>) {
       return;
     }
 
+    req.body = validationResult.data;
+
     next();
   };
 }
