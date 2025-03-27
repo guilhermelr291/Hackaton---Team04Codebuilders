@@ -217,4 +217,16 @@ describe('ProjectService', () => {
       ]);
     });
   });
+
+  describe('getById()', () => {
+    test('Should call projectRepository.getById with correct values', async () => {
+      const getByIdSpy = vi.spyOn(mockProjectRepository, 'getById');
+      const id = 1;
+      const userId = 2;
+
+      await sut.getById(id, userId);
+
+      expect(getByIdSpy).toHaveBeenCalledWith(id, userId);
+    });
+  });
 });
