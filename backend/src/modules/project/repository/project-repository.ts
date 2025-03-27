@@ -18,8 +18,8 @@ export class ProjectRepository {
     return project;
   }
 
-  async getById(id: number) {
-    return await prisma.project.findUnique({ where: { id } });
+  async getById(id: number, userId: number) {
+    return await prisma.project.findUnique({ where: { id, userId } });
   }
 
   async delete(id: number, userId: number) {

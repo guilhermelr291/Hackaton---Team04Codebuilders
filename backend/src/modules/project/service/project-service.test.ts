@@ -114,7 +114,8 @@ describe('ProjectService', () => {
 
       await sut.update(updateProjectParams);
 
-      expect(getByIdSpy).toHaveBeenCalledWith(updateProjectParams.id);
+      const { id, userId } = updateProjectParams;
+      expect(getByIdSpy).toHaveBeenCalledWith(id, userId);
     });
     test('Should throws NotFound error if ProjectRepository.getById returns falsy', async () => {
       vi.spyOn(mockProjectRepository, 'getById').mockResolvedValueOnce(false);
@@ -145,7 +146,7 @@ describe('ProjectService', () => {
 
       await sut.delete(id, userId);
 
-      expect(getByIdSpy).toHaveBeenCalledWith(id);
+      expect(getByIdSpy).toHaveBeenCalledWith(id, userId);
     });
 
     test('Should throws NotFound error if ProjectRepository.getById returns falsy', async () => {
