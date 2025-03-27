@@ -1,9 +1,14 @@
 import { describe, beforeEach, test, vi, expect } from 'vitest';
-import { CreateProjectParams, ProjectService } from './project-service';
+import {
+  CreateProjectParams,
+  ProjectService,
+  updateProjectParams,
+} from './project-service';
 import { UnprocessableEntity } from '../../../common/errors/http-errors';
 
 const mockProjectRepository = {
   create: vi.fn(),
+  update: vi.fn(),
 };
 const mockClientRepository = {
   getById: vi.fn().mockResolvedValue(true),
@@ -17,6 +22,14 @@ const mockCreateProjectParams = (): CreateProjectParams => ({
   price: 10,
 });
 
+const mockUpdateProjectParams = (): updateProjectParams => ({
+  id: 1,
+  userId: 1,
+  name: 'any_name',
+  status: 'IN_PROGRESS',
+  price: 10,
+});
+
 describe('ProjectService', () => {
   let sut: ProjectService;
 
@@ -26,7 +39,7 @@ describe('ProjectService', () => {
     sut = new ProjectService(mockProjectRepository, mockClientRepository);
   });
 
-  describe('create', () => {
+  describe('create()', () => {
     test('Should call clientRepository.getById with correct value', async () => {
       const getByIdSpy = vi.spyOn(mockClientRepository, 'getById');
 
@@ -68,6 +81,16 @@ describe('ProjectService', () => {
       });
 
       await expect(sut.create(mockCreateProjectParams())).rejects.toThrow();
+    });
+  });
+  describe('update()', () => {
+    test('Should call projectRepository.update with correct params', async () => {
+      const createSpy = vi.spyOn(mockProjectRepository, 'update');
+      const updateProjectParams = mockUpdateProjectParams();
+
+      await sut.update(updateProjectParams);
+
+      expect(createSpy).toHaveBeenCalledWith(updateProjectParams);
     });
   });
 });
