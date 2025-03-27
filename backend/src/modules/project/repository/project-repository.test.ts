@@ -215,5 +215,14 @@ describe('ProjectRepository', () => {
         where: { id, userId },
       });
     });
+
+    test('Should throw if prisma throws', async () => {
+      vi.mocked(prisma.project.findUnique).mockImplementationOnce(() => {
+        throw new Error();
+      });
+      const id = 1;
+      const userId = 2;
+      expect(sut.getById(id, userId)).rejects.toThrow();
+    });
   });
 });
