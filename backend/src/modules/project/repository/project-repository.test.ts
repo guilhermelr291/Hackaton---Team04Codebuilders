@@ -124,5 +124,13 @@ describe('ProjectRepository', () => {
         where: { id, userId },
       });
     });
+
+    test('Should throw if prisma throws', async () => {
+      vi.mocked(prisma.project.delete).mockImplementationOnce(() => {
+        throw new Error();
+      });
+
+      expect(sut.delete(1, 2)).rejects.toThrow();
+    });
   });
 });
