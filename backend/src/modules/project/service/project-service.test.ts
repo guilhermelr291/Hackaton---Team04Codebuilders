@@ -4,7 +4,10 @@ import {
   ProjectService,
   updateProjectParams,
 } from './project-service';
-import { UnprocessableEntity } from '../../../common/errors/http-errors';
+import {
+  NotFound,
+  UnprocessableEntity,
+} from '../../../common/errors/http-errors';
 
 const mockProjectRepository = {
   create: vi.fn(),
@@ -105,6 +108,13 @@ describe('ProjectService', () => {
 
     test('Should throw if projectRepository.update throws', async () => {
       vi.spyOn(mockProjectRepository, 'update').mockImplementationOnce(() => {
+        throw new Error();
+      });
+
+      await expect(sut.update(mockUpdateProjectParams())).rejects.toThrow();
+    });
+    test('Should throw if projectRepository.getById throws', async () => {
+      vi.spyOn(mockProjectRepository, 'getById').mockImplementationOnce(() => {
         throw new Error();
       });
 
