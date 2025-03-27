@@ -6,6 +6,7 @@ import { ProjectService } from '../service/project-service';
 const mockProjectService = {
   create: vi.fn(),
   update: vi.fn(),
+  delete: vi.fn(),
 } as unknown as ProjectService;
 
 describe('ProjectController', () => {
@@ -128,6 +129,28 @@ describe('ProjectController', () => {
       );
 
       expect(mockNext).toHaveBeenCalledWith(error);
+    });
+  });
+  describe('delete()', () => {
+    beforeEach(() => {
+      mockRequest = {
+        params: { id: '1' },
+        userId: 1,
+      };
+    });
+
+    test('Should call projectService.delete with correct values', async () => {
+      const deleteSpy = vi.spyOn(mockProjectService, 'delete');
+
+      await sut.delete(
+        mockRequest as Request,
+        mockResponse as Response,
+        mockNext
+      );
+
+      const { userId, params } = mockRequest;
+
+      expect(deleteSpy).toHaveBeenCalledWith(Number(params!.id), userId);
     });
   });
 });
