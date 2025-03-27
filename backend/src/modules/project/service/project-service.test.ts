@@ -109,9 +109,7 @@ describe('ProjectService', () => {
     test('Should throws NotFound error if ProjectRepository.getById returns falsy', async () => {
       vi.spyOn(mockProjectRepository, 'getById').mockResolvedValueOnce(false);
 
-      await expect(sut.update(mockUpdateProjectParams())).rejects.toThrow(
-        NotFound
-      );
+      expect(sut.update(mockUpdateProjectParams())).rejects.toThrow(NotFound);
     });
 
     test('Should throw if projectRepository.update throws', async () => {
@@ -119,14 +117,14 @@ describe('ProjectService', () => {
         throw new Error();
       });
 
-      await expect(sut.update(mockUpdateProjectParams())).rejects.toThrow();
+      expect(sut.update(mockUpdateProjectParams())).rejects.toThrow();
     });
     test('Should throw if projectRepository.getById throws', async () => {
       vi.spyOn(mockProjectRepository, 'getById').mockImplementationOnce(() => {
         throw new Error();
       });
 
-      await expect(sut.update(mockUpdateProjectParams())).rejects.toThrow();
+      expect(sut.update(mockUpdateProjectParams())).rejects.toThrow();
     });
   });
   describe('delete()', () => {
@@ -144,6 +142,12 @@ describe('ProjectService', () => {
       vi.spyOn(mockProjectRepository, 'getById').mockResolvedValueOnce(false);
 
       expect(sut.delete(1, 2)).rejects.toThrow(NotFound);
+    });
+    test('Should throw if projectRepository.getById throws', async () => {
+      vi.spyOn(mockProjectRepository, 'getById').mockImplementationOnce(() => {
+        throw new Error();
+      });
+      expect(sut.delete(1, 2)).rejects.toThrow();
     });
   });
 });
