@@ -5,6 +5,7 @@ import { ProjectService } from '../service/project-service';
 
 const mockProjectService = {
   create: vi.fn(),
+  update: vi.fn(),
 } as unknown as ProjectService;
 
 describe('ProjectController', () => {
@@ -31,7 +32,7 @@ describe('ProjectController', () => {
     mockNext = vi.fn();
   });
 
-  describe('create', () => {
+  describe('create()', () => {
     test('Should call projectService.create with correct values', async () => {
       const createSpy = vi.spyOn(mockProjectService, 'create');
 
@@ -72,6 +73,33 @@ describe('ProjectController', () => {
       );
 
       expect(mockNext).toHaveBeenCalledWith(error);
+    });
+  });
+  describe('update()', () => {
+    beforeEach(() => {
+      mockRequest = {
+        params: { id: '1' },
+        userId: 1,
+        body: { name: 'any_name', status: 'IN_PROGRESS', price: 10 },
+      };
+    });
+
+    test('Should call projectService.update with correct values', async () => {
+      const updateSpy = vi.spyOn(mockProjectService, 'update');
+
+      await sut.update(
+        mockRequest as Request,
+        mockResponse as Response,
+        mockNext
+      );
+
+      const { userId, body, params } = mockRequest;
+
+      expect(updateSpy).toHaveBeenCalledWith({
+        id: Number(params!.id),
+        userId,
+        ...body,
+      });
     });
   });
 });
