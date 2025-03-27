@@ -180,5 +180,14 @@ describe('ProjectRepository', () => {
         where: { userId },
       });
     });
+
+    test('Should throw if prisma throws', async () => {
+      const userId = 1;
+      vi.mocked(prisma.project.findMany).mockImplementationOnce(() => {
+        throw new Error();
+      });
+
+      expect(sut.getUserProjects(userId)).rejects.toThrow();
+    });
   });
 });
