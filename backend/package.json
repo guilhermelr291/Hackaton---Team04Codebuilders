@@ -4,12 +4,17 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "ts-node-dev --respawn --transpile-only src/server.ts",
+    "start": "node ./dist/server.js",
+    "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
+    "build": "prisma generate && tsc",
+    "postinstall": "prisma generate",
     "test": "vitest run --silent",
     "test:unit": "vitest --silent",
     "test:verbose": "vitest",
     "test:ci": "vitest run --silent --coverage",
-    "prepare": "husky"
+    "prepare": "husky",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate": "prisma migrate dev"
   },
   "keywords": [],
   "author": "",
@@ -31,6 +36,7 @@
     "@vitest/coverage-v8": "3.0.9",
     "husky": "^9.1.7",
     "prisma": "^6.5.0",
+    "rollup": "^4.37.0",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.8.2",
     "vitest": "^3.0.9"
