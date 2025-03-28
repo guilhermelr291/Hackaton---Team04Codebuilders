@@ -58,5 +58,12 @@ describe('BcryptAdapter', () => {
 
       expect(result).toBe(true);
     });
+    test('Should return false on failure', async () => {
+      vi.mocked(bcrypt.compare).mockImplementationOnce(() => false);
+
+      const result = await sut.compare('value', 'value');
+
+      expect(result).toBe(false);
+    });
   });
 });
