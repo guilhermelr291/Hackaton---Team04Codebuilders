@@ -15,4 +15,7 @@ export default (router: Router): void => {
   router.patch('/clients/:id', validate(ClientSchema), (req, res, next) =>
     clientController.update(req, res, next)
   );
+  router.delete('/clients/:id', (req, res, next) =>
+    clientController.delete(req, res, next)
+  );
 };
