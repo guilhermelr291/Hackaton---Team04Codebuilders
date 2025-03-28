@@ -14,4 +14,7 @@ export class ClientRepository {
     const client = await prisma.client.update({ where: { id }, data });
     return client;
   }
+  async delete(id: number) {
+    await prisma.client.delete({ where: { id } });
+  }
 }
