@@ -6,11 +6,24 @@ export class ClientController {
     this.clientService = clientService;
   }
 
+  async getUserClients(req: Request, res: Response, next: NextFunction) {
+    try {
+      const userId = req.userId!;
+      const clients = await this.clientService.getUserClients(userId);
+
+      res.status(200).json(clients);
+    } catch (error) {
+      console.log('Erro ao obter clientes: ', error);
+      next(error);
+    }
+  }
+
   async getById(req: Request, res: Response, next: NextFunction) {
     try {
+      const userId = req.userId!;
       const id = Number(req.params.id);
 
-      const client = await this.clientService.getById(id);
+      const client = await this.clientService.getById(id, userId);
 
       res.status(200).json(client);
     } catch (error) {
@@ -23,7 +36,9 @@ export class ClientController {
     try {
       const data = req.body;
 
-      await this.clientService.create(data);
+      const dataToSave = { userId: req.userId, ...data };
+
+      await this.clientService.create(dataToSave);
 
       res.status(201).json({ message: 'Cliente criado com sucesso!' });
     } catch (error) {
@@ -37,7 +52,9 @@ export class ClientController {
       const data = req.body;
       const id = Number(req.params.id);
 
-      await this.clientService.update(id, data);
+      const dataToUpdate = { id, userId: req.userId, ...data };
+
+      await this.clientService.update(dataToUpdate);
 
       res.status(200).json({ message: 'Cliente atualizado com sucesso!' });
     } catch (error) {
@@ -49,8 +66,9 @@ export class ClientController {
   async delete(req: Request, res: Response, next: NextFunction) {
     try {
       const id = Number(req.params.id);
+      const userId = req.userId!;
 
-      await this.clientService.delete(id);
+      await this.clientService.delete(id, userId);
 
       res.status(200).json({ message: 'Cliente excluído com sucesso!' });
     } catch (error) {

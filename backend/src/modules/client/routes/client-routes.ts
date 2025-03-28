@@ -9,6 +9,9 @@ export default (router: Router): void => {
   router.get('/clients/:id', (req, res, next) =>
     clientController.getById(req, res, next)
   );
+  router.get('/clients', (req, res, next) =>
+    clientController.getUserClients(req, res, next)
+  );
   router.post('/clients', validate(ClientSchema), (req, res, next) =>
     clientController.create(req, res, next)
   );

@@ -1,7 +1,9 @@
 import { NotFound } from '../../../common/errors/http-errors';
 import { ClientRepository } from '../repository/client-repository';
 
-export type ClientParams = {
+export type UpdateClientParams = {
+  id: number;
+  userId: number;
   name: string;
   email: string;
   phone?: string;
@@ -10,32 +12,39 @@ export type ClientParams = {
   neighborhood?: string;
   postalCode?: string;
 };
+export type CreateClientParams = Omit<UpdateClientParams, 'id'>;
 
 export class ClientService {
   constructor(private readonly clientRepository: ClientRepository) {
     this.clientRepository = clientRepository;
   }
 
-  async getById(id: number) {
-    const client = await this.clientRepository.getById(id);
+  async getUserClients(userId: number) {
+    const clients = await this.clientRepository.getUserClients(userId);
+    return clients;
+  }
+
+  async getById(id: number, userId: number) {
+    const client = await this.clientRepository.getById(id, userId);
     if (!client) throw new NotFound('Cliente não encontrado');
     return client;
   }
-  async create(data: ClientParams) {
+  async create(data: CreateClientParams) {
     await this.clientRepository.create(data);
   }
 
-  async update(id: number, data: ClientParams) {
-    const client = await this.clientRepository.getById(id);
+  async update(data: UpdateClientParams) {
+    const { id, userId } = data;
+    const client = await this.clientRepository.getById(id, userId);
     if (!client) throw new NotFound('Cliente não encontrado');
 
-    await this.clientRepository.update(id, data);
+    await this.clientRepository.update(data);
   }
 
-  async delete(id: number) {
-    const client = await this.clientRepository.getById(id);
+  async delete(id: number, userId: number) {
+    const client = await this.clientRepository.getById(id, userId);
     if (!client) throw new NotFound('Cliente não encontrado');
 
-    await this.clientRepository.delete(id);
+    await this.clientRepository.delete(id, userId);
   }
 }

@@ -58,7 +58,7 @@ export class ProjectController {
 
       res.status(200).json(projects);
     } catch (error) {
-      console.log('Erro ao excluir projeto: ', error);
+      console.log('Erro ao obter projetos: ', error);
       next(error);
     }
   }
@@ -71,7 +71,7 @@ export class ProjectController {
 
       res.status(200).json(project);
     } catch (error) {
-      console.log('Erro ao excluir projeto: ', error);
+      console.log('Erro ao obter projeto: ', error);
       next(error);
     }
   }

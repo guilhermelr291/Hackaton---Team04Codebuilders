@@ -21,7 +21,8 @@ model User {
   neighborhood  String?
   postalCode    String?
   isEmailVerified  Boolean @default(false)
-  project     Project[]
+  projects     Project[]
+  clients     Client[]
   updatedAt        DateTime            @updatedAt
   createdAt        DateTime            @default(now())
 }
@@ -53,6 +54,7 @@ model Project {
 
 model Client {
   id       Int      @id @default(autoincrement())
+  userId Int
   name String 
   email String 
   phone         String?
@@ -61,6 +63,8 @@ model Client {
   neighborhood  String?
   postalCode    String?
   projects Project[] 
+
+  user User @relation(fields: [userId], references: [id])
 }
 
 model TimeEntry {
