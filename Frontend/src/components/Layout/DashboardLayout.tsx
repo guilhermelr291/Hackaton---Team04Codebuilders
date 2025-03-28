@@ -17,9 +17,10 @@ const DashboardLayout = () =>{
 			<Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
 			<div className="flex flex-col flex-1">
 				<Header setSidebarOpen={setSidebarOpen} />
-				<main className="flex-1 p-6 bg-white text-blue-900 overflow-auto">
-				
+				<main className="flex-1  py-10  px-3 md:px-12 bg-white text-blue-900 overflow-auto">
+					
 					<Outlet />
+					
 				</main>
 			</div>
 		</div>
