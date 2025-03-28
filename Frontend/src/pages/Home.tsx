@@ -193,7 +193,7 @@ export const Home = () => {
 				</div>
 
 				<div className="group relative overflow-hidden rounded-2xl border bg-background p-8 shadow-sm transition-all hover:shadow-md">
-						<div className="absolute -right-20 -top-20 h-40 w-40 rounded-full bg-primary/10 transition-all group-hover:scale-150"></div>
+					
 						<div className="relative">
 							<div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
 								<Calendar className="h-6 w-6 text-primary" />
@@ -216,7 +216,7 @@ export const Home = () => {
 					</div>
 				</div>
 				<div className="group relative overflow-hidden rounded-2xl border bg-background p-8 shadow-sm transition-all hover:shadow-md">
-				<div className="absolute -right-20 -top-20 h-40 w-40 rounded-full bg-primary/10 transition-all group-hover:scale-150"></div>
+				
 					<div className="relative">
 						<div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
 							<Clock className="h-6 w-6 text-primary" />
