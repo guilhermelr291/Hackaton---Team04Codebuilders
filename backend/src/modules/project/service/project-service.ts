@@ -41,7 +41,10 @@ export class ProjectService {
   }
 
   async create(data: CreateProjectParams) {
-    const client = await this.clientRepository.getById(data.clientId);
+    const client = await this.clientRepository.getById(
+      data.clientId,
+      data.userId
+    );
     if (!client) throw new UnprocessableEntity('Cliente não encontrado');
 
     await this.projectRepository.create(data);
