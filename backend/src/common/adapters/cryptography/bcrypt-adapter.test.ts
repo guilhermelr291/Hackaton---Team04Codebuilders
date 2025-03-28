@@ -1,10 +1,11 @@
 import { beforeEach, describe, expect, test, vi } from 'vitest';
-import bcrypt from 'bcrypt';
+import bcrypt, { compare } from 'bcrypt';
 import { BcryptAdapter } from './bcrypt-adapter';
 vi.mock('bcrypt', () => ({
   default: {
     hash: vi.fn().mockResolvedValue('hashed_value'),
     genSalt: vi.fn().mockResolvedValue('any_salt'),
+    compare: vi.fn().mockResolvedValue(true),
   },
 }));
 
@@ -34,6 +35,15 @@ describe('BcryptAdapter', () => {
       const result = await sut.hash('any_value');
 
       expect(result).toBe('hashed_value');
+    });
+  });
+  describe('compare', () => {
+    test('Should call bcrypt compare method with correct values', async () => {
+      const value = 'any_value';
+      const valueToCompare = 'another_value';
+      await sut.compare(value, valueToCompare);
+
+      expect(bcrypt.compare).toHaveBeenCalledWith(value, valueToCompare);
     });
   });
 });
