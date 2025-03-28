@@ -45,5 +45,13 @@ describe('BcryptAdapter', () => {
 
       expect(bcrypt.compare).toHaveBeenCalledWith(value, valueToCompare);
     });
+
+    test('Should throw if bcrypt throws', () => {
+      vi.mocked(bcrypt.compare).mockImplementationOnce(() => {
+        throw new Error();
+      });
+
+      expect(sut.compare('value', 'valueToCompare')).rejects.toThrow();
+    });
   });
 });
