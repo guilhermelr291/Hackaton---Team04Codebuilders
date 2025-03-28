@@ -7,6 +7,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 
+
 const LoginSchema = z.object({
     email: z.string().email("Formato de e-mail inválido"),
     password: z.string().min(3,"Senha menor que 3 caracteres"),
@@ -16,7 +17,8 @@ type FormData = z.infer<typeof LoginSchema>;
 
 const SignIn = ()=> {
 
-    const {isLoggingIn} = useAuthStore();
+    const {isLoggingIn,login} = useAuthStore();
+
     const [showPassword, setShowPassword] = useState(false)
 
     const {
@@ -25,8 +27,9 @@ const SignIn = ()=> {
         formState: { errors },
       } = useForm<FormData>({resolver: zodResolver(LoginSchema),});useForm<FormData>();
 
-    const onSubmit = (data: FormData) => {
-        console.log("Dados do formulário:", data);
+    const onSubmit = async(data: FormData) => {
+        const retorno = await login(data);
+        console.log(retorno)
     };
 
   return (
@@ -44,6 +47,7 @@ const SignIn = ()=> {
                 <h1 className="text-2xl font-bold">Entrar</h1>
                 <p className="pt-3 from-neutral-100">Entre com seu e-mail e senha para acessar sua conta</p>
             </div>
+            
 
             <form onSubmit={handleSubmit(onSubmit)} className="mt-6">
                 <div>
@@ -74,7 +78,7 @@ const SignIn = ()=> {
                 </div>
 
                 <div className="mt-6">
-                        <button className='w-full btn btn-sm bg-[#18181B] text-white p-2 rounded-md' type='submit' disabled={isLoggingIn}>
+                        <button className='w-full cursor-pointer btn btn-sm bg-[#18181B] text-white p-2 rounded-md' type='submit' disabled={isLoggingIn}>
 
                             {isLoggingIn ? (
 
