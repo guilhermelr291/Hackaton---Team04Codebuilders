@@ -34,6 +34,10 @@ const mockProjectRepository = {
 };
 const mockClientRepository = {
   getById: vi.fn().mockResolvedValue(true),
+  create: vi.fn(),
+  update: vi.fn(),
+  delete: vi.fn(),
+  getUserClients: vi.fn(),
 };
 
 const mockCreateProjectParams = (): CreateProjectParams => ({
