@@ -64,35 +64,27 @@ const SignIn = ()=> {
                             placeholder='***************' 
                             className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border rounded-lg dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40" 
                             type={showPassword ? 'text' : 'password'}
-                            />
-                        
-                        
+                        />
                         <button type='button' className='absolute inset-y-0 right-0 flex items-center pr-3' onClick={() => setShowPassword(!showPassword)}>
                             {showPassword ? <Eye size={20} /> : <EyeOff size={20}/>}
                         </button>
 
                         {errors.password && <p className="text-red-500">{errors.password.message}</p>}				
-                    </div>
-                    
-                  
+                    </div>                  
                 </div>
 
                 <div className="mt-6">
-                        <button className='w-full cursor-pointer btn btn-sm bg-[#18181B] text-white p-2 rounded-md' type='submit' disabled={isLoggingIn}>
+                    <button className='w-full cursor-pointer btn btn-sm bg-[#18181B] text-white p-2 rounded-md' type='submit' disabled={isLoggingIn}>
 
-                            {isLoggingIn ? (
-
-                                <Loader className='animate-spin'/>
-                            ) :
-                                "Entrar"
-                            }
-                            
+                        {isLoggingIn ? (
+                            <Loader className='animate-spin'/>
+                        ) :
+                            "Entrar"
+                        }                            
 					</button>
 
                 </div>
             </form>
-
-
             <p className="mt-8 text-md font-light text-center text-black text-bold"> Não tem uma conta? <a href="signup" className="font-medium text-black text-bold dark:text-gray-200 hover:underline">Cadastre-se</a></p>
         </div>
 
