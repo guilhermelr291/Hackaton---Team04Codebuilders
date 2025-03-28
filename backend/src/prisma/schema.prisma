@@ -23,6 +23,7 @@ model User {
   isEmailVerified  Boolean @default(false)
   projects     Project[]
   clients     Client[]
+  timeEntries     TimeEntry[]
   updatedAt        DateTime            @updatedAt
   createdAt        DateTime            @default(now())
 }
@@ -69,12 +70,14 @@ model Client {
 
 model TimeEntry {
   id          Int      @id @default(autoincrement())
+  userId      Int
   projectId   Int
   duration    Int    
   description String
-  date  DateTime?
+  date  DateTime
   createdAt   DateTime @default(now())
   
   project     Project  @relation(fields: [projectId], references: [id])
+  user User @relation(fields: [userId], references: [id])
 }
 
