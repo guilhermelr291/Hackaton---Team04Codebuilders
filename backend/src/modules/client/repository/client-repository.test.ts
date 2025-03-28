@@ -26,7 +26,7 @@ describe('ClientRepository', () => {
 
   beforeEach(() => {
     clientRepository = new ClientRepository();
-    // Clear all mocks before each test
+
     vi.clearAllMocks();
   });
 
