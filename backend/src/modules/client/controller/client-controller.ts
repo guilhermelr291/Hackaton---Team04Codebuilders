@@ -14,7 +14,34 @@ export class ClientController {
 
       res.status(200).json(client);
     } catch (error) {
-      console.log('Erro ao excluir projeto: ', error);
+      console.log('Erro ao obter cliente: ', error);
+      next(error);
+    }
+  }
+
+  async create(req: Request, res: Response, next: NextFunction) {
+    try {
+      const data = req.body;
+
+      await this.clientService.create(data);
+
+      res.status(201).json({ message: 'Cliente criado com sucesso!' });
+    } catch (error) {
+      console.log('Erro ao criar cliente: ', error);
+      next(error);
+    }
+  }
+
+  async update(req: Request, res: Response, next: NextFunction) {
+    try {
+      const data = req.body;
+      const id = Number(req.params.id);
+
+      await this.clientService.update(id, data);
+
+      res.status(200).json({ message: 'Cliente atualizado com sucesso!' });
+    } catch (error) {
+      console.log('Erro ao atualizar cliente: ', error);
       next(error);
     }
   }
