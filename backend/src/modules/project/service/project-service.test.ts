@@ -73,7 +73,10 @@ describe('ProjectService', () => {
 
       await sut.create(createProjectParams);
 
-      expect(getByIdSpy).toHaveBeenCalledWith(createProjectParams.clientId);
+      expect(getByIdSpy).toHaveBeenCalledWith(
+        createProjectParams.clientId,
+        createProjectParams.userId
+      );
     });
 
     test('Should throw UnprocessableEntity if client does not exist', async () => {
