@@ -45,4 +45,17 @@ export class ClientController {
       next(error);
     }
   }
+
+  async delete(req: Request, res: Response, next: NextFunction) {
+    try {
+      const id = Number(req.params.id);
+
+      await this.clientService.delete(id);
+
+      res.status(200).json({ message: 'Cliente excluído com sucesso!' });
+    } catch (error) {
+      console.log('Erro ao excluir cliente: ', error);
+      next(error);
+    }
+  }
 }
