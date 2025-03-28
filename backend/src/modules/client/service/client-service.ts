@@ -31,4 +31,11 @@ export class ClientService {
 
     await this.clientRepository.update(id, data);
   }
+
+  async delete(id: number) {
+    const client = await this.clientRepository.getById(id);
+    if (!client) throw new NotFound('Cliente não encontrado');
+
+    await this.clientRepository.delete(id);
+  }
 }
