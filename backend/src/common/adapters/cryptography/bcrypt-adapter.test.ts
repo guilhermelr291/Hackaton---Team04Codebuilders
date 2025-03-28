@@ -53,5 +53,10 @@ describe('BcryptAdapter', () => {
 
       expect(sut.compare('value', 'valueToCompare')).rejects.toThrow();
     });
+    test('Should return true on success', async () => {
+      const result = await sut.compare('value', 'value');
+
+      expect(result).toBe(true);
+    });
   });
 });
