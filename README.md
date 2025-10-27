@@ -2,7 +2,7 @@
 
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 
-**🏆 3º Lugar no Hackathon BorderLess Coding**
+**🏆 4º Lugar no Hackathon BorderLess Coding**
 
 **Backend desenvolvido por mim**, aplicando arquitetura modular escalável e princípios sólidos de engenharia de software.
 
